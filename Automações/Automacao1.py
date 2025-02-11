@@ -18,5 +18,5 @@ sleep(10)
 # Posicionando para clicar
 pyautogui.moveTo(577, 538, duration=2)
 # Loop para clicar 100x
-for i in range(38):
+for i in range(100):
     pyautogui.click()
