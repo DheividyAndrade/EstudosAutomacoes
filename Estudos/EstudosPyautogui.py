@@ -40,4 +40,9 @@ for i in range(100):
 pyautogui.scroll(500) #subir
 pyautogui.scroll(-500) #descer
 
+# Digitar Algo
+pyautogui.typewrite('Amor') # obs: import pyperclip, todos os acentos vão dar certo.
+
+# pyautogui.hotkey('ctrl' , 'v') <- comando para usar horkeys do teclado.
+
 #
