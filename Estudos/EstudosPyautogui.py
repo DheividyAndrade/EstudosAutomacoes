@@ -45,8 +45,14 @@ pyautogui.typewrite('Amor') # obs: import pyperclip, todos os acentos vão dar c
 
 # pyautogui.hotkey('ctrl' , 'v') <- comando para usar horkeys do teclado.
 
-# pyautigui.press('tab') <- usado para usar botões de atalho do teclado
+# pyautigui.press('tab') <- usado para usar botões de atalho do teclado.
 
-# print(pyautogui.KEYBOARD_KEYS) <- PARA VER TODOS AS TECLAS 
+# print(pyautogui.KEYBOARD_KEYS) <- PARA VER TODOS AS TECLAS.
 
-# 
+# pyautogui.alert(text='iniciando sua automação', title='Automação de Login',button='ok') <- usado para dar alertas ao Usuario.
+
+# Pedir informação 
+email = pyautogui.prompt(text='Digite seu E-mail', title='Informações obrigatorias')
+print(f'você digitou {email}') <- usado para pedir informações 
+
+#
