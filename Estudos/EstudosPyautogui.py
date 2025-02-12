@@ -35,3 +35,9 @@ for i in range(100):
 # pyautogui.tripleclick() <- 3 clicks com mouse.
 
 # pyautogui.dragto() <- Clicar e arrastar
+
+#Simulando Scroll do Mouse
+pyautogui.scroll(500) #subir
+pyautogui.scroll(-500) #descer
+
+#
