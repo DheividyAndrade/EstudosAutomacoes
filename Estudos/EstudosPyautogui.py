@@ -34,3 +34,4 @@ for i in range(100):
 
 # pyautogui.tripleclick() <- 3 clicks com mouse.
 
+# pyautogui.dragto() <- Clicar e arrastar
