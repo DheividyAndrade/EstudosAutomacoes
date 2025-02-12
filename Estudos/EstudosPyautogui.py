@@ -55,4 +55,5 @@ pyautogui.typewrite('Amor') # obs: import pyperclip, todos os acentos vão dar c
 email = pyautogui.prompt(text='Digite seu E-mail', title='Informações obrigatorias')
 print(f'você digitou {email}') <- usado para pedir informações 
 
-#
+# mask='*' <- serve para deixar a senha escondida ao digitar.
+
