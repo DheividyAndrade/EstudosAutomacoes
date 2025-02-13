@@ -57,3 +57,12 @@ print(f'você digitou {email}') <- usado para pedir informações
 
 # mask='*' <- serve para deixar a senha escondida ao digitar.
 
+# pyautogui.screenshot('tela.jpg') <- tirar print
+
+# pyautogui.screenshot('wpp.jpg', region=()) <- usado para tirar print especifico de algo.
+
+# # quebrando 'não sou um robô'
+cap = pyautogui.locateCenterOnScreen('google3.png')
+pyautogui.click(cap [0], cap[1], duration=2) <- obs: 0 e 1 representa x e y.
+
+#
