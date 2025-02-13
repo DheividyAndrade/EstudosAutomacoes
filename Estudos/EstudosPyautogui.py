@@ -65,4 +65,10 @@ print(f'você digitou {email}') <- usado para pedir informações
 cap = pyautogui.locateCenterOnScreen('google3.png')
 pyautogui.click(cap [0], cap[1], duration=2) <- obs: 0 e 1 representa x e y.
 
-#
+# import webbrowser
+
+webbrowser.open('https://') <- usado para abrir sites no navegador.
+
+# webbrowser.open_new_tab('https://facebook.com') <- abrir nova aba.
+
+# 
