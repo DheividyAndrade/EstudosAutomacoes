@@ -49,14 +49,13 @@ while True:
     pyautogui.click(1275, 707, duration=1)
     sleep(0.5)
     # Verificar se já foi Curtida( Se já pausar por 24h)
-    coracao = pyautogui.locateCenterOnScreen("coracao.png", confidence=0.8)
-    coracaob = pyautogui.locateCenterOnScreen("coracaob", confidence=0.8)
+    coracao = pyautogui.locateCenterOnScreen("coracao.png")
     sleep(1)
     if coracao is not None:
         logout()
         sleep(30)
     # se não curtiu curti e comentar
-    elif coracaob == coracaob:
+    elif coracao == None:
         pyautogui.click(1330, 855, duration=1)
         sleep(0.5)
         pyautogui.click(1380, 856, duration=1)
