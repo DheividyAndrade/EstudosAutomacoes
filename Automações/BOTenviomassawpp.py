@@ -19,7 +19,11 @@ import pyperclip
 mensagem = "Olá, Gostaria de conhecer mais sobre nossos BOTS e Automações de Sistemas? (Digite sim, se gostaria de participar.)"
 
 # Forma simples de enviar para contatos em massa 
+<<<<<<< HEAD
 # telefones = [55xxxxxxxxxx, 55xxxxxxxxxxx]
+=======
+# telefones = [55xxxxxxxxxxx, 55xxxxxxxxxxx]
+>>>>>>> SalaDeTeste
 
 # enviando para contatos em massa atraves de um arquivo
 telefones = []
