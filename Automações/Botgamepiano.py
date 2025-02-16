@@ -1,3 +1,5 @@
+# Projeto zerar game piano: https://gameforge.com/en-US/littlegames/magic-piano-tiles/#
+
 import pyautogui
 import keyboard
 import win32api
