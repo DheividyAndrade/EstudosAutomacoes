@@ -1,4 +1,4 @@
-# encontrando elementos por ID
+# encontrando puramente por TEXTO
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -38,10 +38,18 @@ def iniciar_driver():
     driver = webdriver.Chrome(options=chrome_options)
     return driver
 
+
 driver = iniciar_driver()
-driver.get('') # link site para abrir.
+driver.get('https://cursoautomacao.netlify.app/')  # link site para abrir.
+
+link_home = driver.find_element(By.LINK_TEXT, 'Home')
+link_desafio = driver.find_element(By.PARTIAL_LINK_TEXT, 'Des')
+
+if link_home is not None:
+    print('link text Encontrado')
+if link_desafio is not None:
+    print('link desafio Encontrado')
 
 
 input('')
 driver.close()
-
