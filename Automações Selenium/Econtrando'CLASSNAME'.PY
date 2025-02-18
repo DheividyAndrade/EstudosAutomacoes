@@ -1,4 +1,4 @@
-# encontrando elementos por ID
+# encontrando elementos class name
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
