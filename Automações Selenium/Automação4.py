@@ -46,6 +46,24 @@ sleep(1)
 driver.maximize_window()
 sleep(1)
 
+# Clicar em desafio
+botao_desafio = driver.find_element(By.LINK_TEXT, 'Desafios')
+botao_desafio.click()
+sleep(1)
+# Scroll para baixo
+driver.execute_script("window.scrollTo(0, 2300);")
+sleep(3)
+
+botão_dropdown = driver.find_element(By.XPATH, "//select[@id='paisesselect']")
+opcoes = Select(botão_dropdown)
+opcoes.select_by_visible_text('Estados Unidos')
+sleep(1)
+opcoes.select_by_visible_text('Africa')
+sleep(1)
+opcoes.select_by_visible_text('Chille')
+sleep(1)
+
+
 
 input('')
 driver.close()
