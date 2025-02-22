@@ -61,7 +61,7 @@ sleep(1)
 motos = driver.find_elements(By.XPATH, "//input[@name='motos']")
 for moto in motos:
     moto.click()
-    sleep(1) # Sleep para Humanizar 
+    sleep(1) # Sleep para Humanizar, para sites sensíveis.
 
 
 
