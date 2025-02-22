@@ -47,7 +47,13 @@ sleep(1)
 driver.maximize_window()
 sleep(1)
 
+bota_windowns = driver.find_element(By.ID, 'WindowsRadioButton')
+bota_windowns.click()
+sleep(1)
+bota_windowns.send_keys(Keys.DOWN) # Utilizando seta pra baixo
+sleep(1)
+
+
 
 input('')
 driver.close()
-
