@@ -44,7 +44,27 @@ sleep(1)
 driver.maximize_window()
 sleep(1)
 
+# Clicar em desafio
+botao_desafio = driver.find_element(By.LINK_TEXT, 'Desafios')
+botao_desafio.click()
+sleep(1)
+# Scroll para baixo
+driver.execute_script("window.scrollTo(0, 1600);")
+sleep(1)
+
+carros = driver.find_elements(By.XPATH, "//input[@name='carros']")
+carros[1].click()
+carros[3].click()
+carros[4].click()
+sleep(1)
+
+motos = driver.find_elements(By.XPATH, "//input[@name='motos']")
+for moto in motos:
+    moto.click()
+    sleep(1) # Sleep para Humanizar 
+
+
+
 
 input('')
 driver.close()
-
