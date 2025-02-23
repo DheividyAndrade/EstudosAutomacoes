@@ -33,3 +33,6 @@
 # Encontrar filho, quando há multiplos filhos
 # Find child when multiple elements
 //thead/tr//th[2]
+
+# xpath de texto
+//button[@text()='botao enviar']
