@@ -55,11 +55,11 @@ def digitar_naturalmente(texto, elemento):
         sleep(random.randint(1, 5)/30)
 
 campo_email = driver.find_element(By.ID, 'email')
-digitar_naturalmente('deividyandrade@hotmail.com', campo_email)
+digitar_naturalmente('', campo_email) #campo para email
 sleep(2)
 campo_senha = driver.find_element(By.XPATH, "//input[@type='password']")
 sleep(1)
-digitar_naturalmente('Ddguit@r321', campo_senha)
+digitar_naturalmente('', campo_senha) #campo para senha
 sleep(2)
 botao_entrar = driver.find_element(By.NAME, 'login')
 botao_entrar.click()

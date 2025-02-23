@@ -1,0 +1,6 @@
+    Cliente pediu para criar um bot para Comentar algo (do gosto dele) no facebook.
+Deixei as parte do reCAPCHER manual, pois o cliente não estava interessado em uma 
+automação mais robusta, por isso especifiquei o tempo que ele teria para realizar o 
+reCAPCHER.
+    Auterei todos os campos de login,senha, campo de post, para as informações do 
+Cliente.
