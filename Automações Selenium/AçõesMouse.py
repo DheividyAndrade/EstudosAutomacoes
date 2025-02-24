@@ -3,6 +3,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from time import sleep
 from selenium.webdriver.support.select import Select
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver import ActionChains
 
 
@@ -41,20 +42,30 @@ def iniciar_driver():
 
 # 1 - Navegar ate o site
 driver = iniciar_driver()
-driver.get('https://cursoautomacao.netlify.app/')
+driver.get('https://cursoautomacao.netlify.app/exemplo_chains')
 sleep(1)
 # Usado para deixar tela completa do navegador.
 driver.maximize_window()
 sleep(1)
 
-select_dropdown = driver.find_element(By.XPATH, "//select[@id='paisselect']")
-opcoes = Select(select_dropdown)
-# acessando Estados Unidos pelo índice 1
-opcoes.select_by_index(1)
-sleep(2)
-# acessando atraves do texto do dropdown
-opcoes.select_by_visible_text('Brasil')
-sleep(1) 
+# ActionChains(sequencia de passos)
+botao = driver.find_element(By.ID, 'botao-direito')
+
+# ativando e usando botao direito mouse
+chain = ActionChains(driver)
+chain.context_click(botao).pause(3).send_keys(Keys.DOWN).pause(3).send_keys(
+    Keys.DOWN).pause(3).send_keys(Keys.DOWN).pause(3).click().perform()
+
+
+
+driver.get('https://cursoautomacao.netlify.com/')
+window_10_radio_button = driver.find_element(By.ID, 'WindowsRadioButton')
+
+# Clicando com botao esquerdo
+chain2 = ActionChains(driver)
+chain2.click(window_10_radio_button).pause(3).send_keys(
+    Keys.DOWN).pause(3).send_keys(Keys.UP).click().perform()
+
 
 
 input('')
