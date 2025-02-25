@@ -4,7 +4,9 @@ from selenium.webdriver.common.by import By
 from time import sleep
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.keys import Keys
-
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import *
+from selenium.webdriver.support import expected_conditions
 
 def iniciar_driver():
     chrome_options = Options()
@@ -40,7 +42,7 @@ def iniciar_driver():
     return driver
 
 # 1 - Navegar ate o site
-driver = iniciar_driver()
+driver, wait = iniciar_driver()
 driver.get('https://cursoautomacao.netlify.app/')
 sleep(1)
 # Usado para deixar tela completa do navegador.

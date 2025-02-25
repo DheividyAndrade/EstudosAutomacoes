@@ -3,9 +3,10 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from time import sleep
 from selenium.webdriver.support.select import Select
-from selenium.webdriver import ActionChains
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import *
 from selenium.webdriver.support import expected_conditions as condicao_esperada
-
 
 def iniciar_driver():
     chrome_options = Options()
@@ -38,24 +39,41 @@ def iniciar_driver():
     })
     # inicializando o webdriver
     driver = webdriver.Chrome(options=chrome_options)
-    return driver
+
+    wait = WebDriverWait(
+        driver,
+        10,
+        poll_frequency=1,
+        ignored_exceptions=[
+            NoSuchElementException,
+            ElementNotVisibleException,
+            ElementNotSelectableException,
+        ]
+    )
+    return driver, wait
+
 
 # 1 - Navegar ate o site
 driver, wait = iniciar_driver()
-driver.get('https://cursoautomacao.netlify.app/')
-sleep(1)
+# Utilizando implicitly Wait <<
+driver.implicitly_wait(10)
+driver.get('http://google.com/flights')
 # Usado para deixar tela completa do navegador.
 driver.maximize_window()
-sleep(1)
 
-select_dropdown = driver.find_element(By.XPATH, "//select[@id='paisselect']")
-opcoes = Select(select_dropdown)
-# acessando Estados Unidos pelo índice 1
-opcoes.select_by_index(1)
-sleep(2)
-# acessando atraves do texto do dropdown
-opcoes.select_by_visible_text('Brasil')
-sleep(1) 
+# 2 - Navegar ate o site
+driver, wait = iniciar_driver()
+driver.get('http://google.com/flights')
+# Utilizando WAIT EXPLÍCITO <<
+brasilia = wait.until(condicao_esperada.visibility_of_all_elements_located((By.XPATH,"//button[@data-index='1']")))
+brasilia[0].click()
+# Usado para deixar tela completa do navegador.
+driver.maximize_window()
+
+
+
+
+
 
 
 input('')
