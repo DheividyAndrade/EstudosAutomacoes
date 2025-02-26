@@ -7,8 +7,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import *
 from selenium.webdriver.support import expected_conditions as condicao_esperada
+import random
 from selenium.webdriver.common.action_chains import ActionChains
-
 
 def iniciar_driver():
     chrome_options = Options()
@@ -51,26 +51,13 @@ def iniciar_driver():
             ElementNotSelectableException,
         ]
     )
-    return driver, wai
+    return driver, wait
 
-# 1 - Navegar ate o site
+
+
+sleep(3)
 driver, wait = iniciar_driver()
-driver.get('https://cursoautomacao.netlify.app/')
-sleep(1)
-# Usado para deixar tela completa do navegador.
-driver.maximize_window()
-sleep(1)
-
-select_dropdown = driver.find_element(By.XPATH, "//select[@id='paisselect']")
-opcoes = Select(select_dropdown)
-# acessando Estados Unidos pelo índice 1
-opcoes.select_by_index(1)
-sleep(2)
-# acessando atraves do texto do dropdown
-opcoes.select_by_visible_text('Brasil')
-sleep(1) 
-
-
-input('')
-driver.close()
+driver.get('https://www.instagram.com/')
+botao_curti = driver.find_elements(By.XPATH, "//div[@class='x6s0dn4 x78zum5 xdt5ytf xl56j7k']")
+botao_curti[5].click()
 

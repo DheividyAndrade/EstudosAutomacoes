@@ -7,6 +7,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import *
 from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.common.action_chains import ActionChains
+
 
 def iniciar_driver():
     chrome_options = Options()
