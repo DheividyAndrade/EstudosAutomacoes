@@ -7,6 +7,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 import random
 
+
 def iniciar_driver():
     chrome_options = Options()
     '''
@@ -41,80 +42,59 @@ def iniciar_driver():
     return driver
 
 
-# 1 - Navegar ate o site
-driver = iniciar_driver()
-driver.get('https://www.facebook.com/')
-sleep(1)
-# Usado para deixar tela completa do navegador.
-driver.maximize_window()
-sleep(2)
+while True:
+    # 1 - Navegar ate o site
+    driver = iniciar_driver()
+    driver.get('https://www.facebook.com/')
+    sleep(1)
+    # Usado para deixar tela completa do navegador.
+    driver.maximize_window()
+    sleep(2)
 
-def digitar_naturalmente(texto, elemento):
-    for letra in texto:
-        elemento.send_keys(letra)
-        sleep(random.randint(1, 5)/30)
+    def digitar_naturalmente(texto, elemento):
+        for letra in texto:
+            elemento.send_keys(letra)
+            sleep(random.randint(1, 5)/30)
 
-campo_email = driver.find_element(By.ID, 'email')
-digitar_naturalmente('', campo_email) #campo para email
-sleep(2)
-campo_senha = driver.find_element(By.XPATH, "//input[@type='password']")
-sleep(1)
-digitar_naturalmente('', campo_senha) #campo para senha
-sleep(2)
-botao_entrar = driver.find_element(By.NAME, 'login')
-botao_entrar.click()
-sleep(5)
+    campo_email = driver.find_element(By.ID, 'email')
+    digitar_naturalmente('', campo_email) #campo para email
+    sleep(2)
+    campo_senha = driver.find_element(By.XPATH, "//input[@type='password']")
+    sleep(1)
+    digitar_naturalmente('', campo_senha) #campo para senha
+    sleep(2)
+    botao_entrar = driver.find_element(By.NAME, 'login')
+    botao_entrar.click()
+    sleep(5)
 
-#Aguardar Usuario fazer reCAPCHER
+    #Aguardar Usuario fazer reCAPCHER
 
-print('Você tem 1 minuto Para Realizar o >>reCAPCHER<< ')
-sleep(60)
-
-# Clicando nos "agora não"
-ActionChains(driver).send_keys(Keys.TAB).perform()
-sleep(0.5)
-ActionChains(driver).send_keys(Keys.TAB).perform()
-sleep(0.5)
-ActionChains(driver).send_keys(Keys.ENTER).perform()
-sleep(2)
+    print('Você tem 1 minuto Para Realizar o >>reCAPCHER<< ')
+    sleep(60)
 
 
-# Voltando a Automação
-clicar_campo_escrever = driver.find_element(By.XPATH, "//div[@class='x1i10hfl x1ejq31n xd10rxx x1sy0etr x17r0tee x972fbf xcfux6l x1qhh985 xm0m39n x9f619 x1ypdohk xe8uvvx xdj266r x11i5rnm xat24cr x1mh8g0r x16tdsg8 x1hl2dhg xggy1nq x87ps6o x1lku1pv x1a2a7pz x6s0dn4 xmjcpbm x107yiy2 xv8uw2v x1tfwpuw x2g32xy x78zum5 x1q0g3np x1iyjqo2 x1nhvcw1 x1n2onr6 xt7dq6l x1ba4aug x1y1aw1k xn6708d xwib8y2 x1ye3gou']")
-clicar_campo_escrever.click()
-sleep(3)
-
-# Escrevendo Post
-campo_escrever = driver.find_element(By.XPATH, "//p[@class='xdj266r x11i5rnm xat24cr x1mh8g0r x16tdsg8']")
-digitar_naturalmente('Boa noite', campo_escrever)
-sleep(3)
-
-campo_escrever.send_keys(Keys.TAB)
-sleep(0.3)
-campo_escrever.send_keys(Keys.TAB)
-sleep(0.3)
-campo_escrever.send_keys(Keys.TAB)
-sleep(0.3)
-campo_escrever.send_keys(Keys.TAB)
-sleep(0.3)
-campo_escrever.send_keys(Keys.TAB)
-sleep(0.3)
-campo_escrever.send_keys(Keys.TAB)
-sleep(0.3)
-campo_escrever.send_keys(Keys.TAB)
-sleep(0.3)
-campo_escrever.send_keys(Keys.TAB)
-sleep(0.3)
-campo_escrever.send_keys(Keys.TAB)
-sleep(0.3)
-campo_escrever.send_keys(Keys.TAB)
-sleep(2)
-ActionChains(driver).send_keys(Keys.ENTER).perform()
-sleep(3)
+    # Clicando Esc
+    ActionChains(driver).send_keys(Keys.ESCAPE).perform()
+    sleep(3)
 
 
 
+    # Voltando a Automação
+    clicar_campo_escrever = driver.find_element(By.XPATH, "//div[@class='x1i10hfl x1ejq31n xd10rxx x1sy0etr x17r0tee x972fbf xcfux6l x1qhh985 xm0m39n x9f619 x1ypdohk xe8uvvx xdj266r x11i5rnm xat24cr x1mh8g0r x16tdsg8 x1hl2dhg xggy1nq x87ps6o x1lku1pv x1a2a7pz x6s0dn4 xmjcpbm x107yiy2 xv8uw2v x1tfwpuw x2g32xy x78zum5 x1q0g3np x1iyjqo2 x1nhvcw1 x1n2onr6 xt7dq6l x1ba4aug x1y1aw1k xn6708d xwib8y2 x1ye3gou']")
+    clicar_campo_escrever.click()
+    sleep(3)
 
-input('')
-driver.close()
+    # Escrevendo Post
+    campo_escrever = driver.find_element(By.XPATH, "//p[@class='xdj266r x11i5rnm xat24cr x1mh8g0r x16tdsg8']")
+    digitar_naturalmente('Teste2', campo_escrever)
+    sleep(3)
 
+    # Clicando postar
+    botao_postar = driver.find_element(By.XPATH, "//span[text()='Postar']")
+    botao_postar.click()
+    sleep(2)
+    # Volta novamente em 24hs para postar Novamente
+    sleep(86400)
+
+
+    driver.close()
