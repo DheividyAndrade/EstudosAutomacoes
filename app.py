@@ -130,7 +130,7 @@ botao_casino.click()
 sleep(8)
 
 # Usando Scroll para chegar ate o Bakara
-driver.execute_script("window.scrollTo(0, 1500);")
+driver.execute_script("window.scrollTo(0, 800);")
 sleep(3)
 
 
