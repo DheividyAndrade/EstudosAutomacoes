@@ -13,6 +13,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.alert import Alert
 import pyautogui
 
+
 def iniciar_driver():
     chrome_options = Options()
     '''
@@ -56,10 +57,12 @@ def iniciar_driver():
     )
     return driver, wait
 
+
 def digitar_naturalmente(texto, elemento):
     for letra in texto:
         elemento.send_keys(letra)
         sleep(random.randint(1, 5)/30)
+
 
 # 1 - Navegar ate o site
 driver, wait = iniciar_driver()
@@ -69,55 +72,67 @@ driver.maximize_window()
 sleep(3)
 
 # Aceitar Cookins
-cookins = wait.until(condicao_esperada.element_to_be_clickable((By.XPATH, "//button[text()='Aceitar cookies']")))            
+cookins = wait.until(condicao_esperada.element_to_be_clickable(
+    (By.XPATH, "//button[text()='Aceitar cookies']")))
 sleep(1)
 cookins.click()
 sleep(2)
 # Clicando no botao entrar
-botao_entrar = wait.until(condicao_esperada.element_to_be_clickable((By.XPATH,"//button[text()='Entrar']")))
+botao_entrar = wait.until(condicao_esperada.element_to_be_clickable(
+    (By.XPATH, "//button[text()='Entrar']")))
 sleep(1)
 botao_entrar.click()
 sleep(3)
 
 # Escrevendo Email/login
-campo_escrever_email = wait.until(condicao_esperada.element_to_be_clickable((By.NAME, 'username')))
+campo_escrever_email = wait.until(
+    condicao_esperada.element_to_be_clickable((By.NAME, 'username')))
 sleep(1)
-digitar_naturalmente('deividyandrade@hotmail.com',campo_escrever_email)
+digitar_naturalmente('deividyandrade@hotmail.com', campo_escrever_email)
 sleep(2)
 
 # Escrevendo senha
-campo_escrever_senha = wait.until(condicao_esperada.element_to_be_clickable((By.NAME, 'password')))
+campo_escrever_senha = wait.until(
+    condicao_esperada.element_to_be_clickable((By.NAME, 'password')))
 sleep(1)
-digitar_naturalmente('Ddguit@r321',campo_escrever_senha)
+digitar_naturalmente('Ddguit@r321', campo_escrever_senha)
 sleep(2)
 
 # Botão Enviar
-botao_enviar = wait.until(condicao_esperada.element_to_be_clickable((By.XPATH, "//div[@class='StyledLoadingContainer-sc-zuafez vxcJN']")))
+botao_enviar = wait.until(condicao_esperada.element_to_be_clickable(
+    (By.XPATH, "//div[@class='StyledLoadingContainer-sc-zuafez vxcJN']")))
 sleep(1)
 botao_enviar.click()
 sleep(5)
 
 # Entendi Localização
-botao_entendi = wait.until(condicao_esperada.element_to_be_clickable((By.XPATH, "//button[text()='Entendi']")))
+botao_entendi = wait.until(condicao_esperada.element_to_be_clickable(
+    (By.XPATH, "//button[text()='Entendi']")))
 sleep(1)
 botao_entendi.click()
-sleep(5)
+sleep(3)
 
-
-# Permitir Localização 
+# Alerta Pedir para Permitir localização
+pyautogui.alert(text='Permita a Localização do site! VOCÊ TEM 10s',title='ALERTA USUARIO DO BOT!', button='OK')
 sleep(12)
 
-pyautogui.click(264,203, duration=1)
-sleep(2)
-pyautogui.click(1028,402, duration=1)
-sleep(2)
-pyautogui.click(92,162, duration=1)
+# Fechando Guia de Localização
+botao_fechar_guia = wait.until(condicao_esperada.element_to_be_clickable(
+    (By.XPATH, "//span[@class='StyledModalClose-sc-mv2bgq izwmed']")))
+sleep(1)
+botao_fechar_guia.click()
 sleep(5)
 
-# Usando Scroll para chegar ate o Bakara
-driver.execute_script("window.scrollTo(0, 800);")
+# Clicando casino
+botao_casino = wait.until(condicao_esperada.element_to_be_clickable((By.XPATH, "//img[@alt='casino']")))
+sleep(1)
+botao_casino.click()
+sleep(8)
 
-sleep(1000)
+# Usando Scroll para chegar ate o Bakara
+
+
+
 
 
 input('')
