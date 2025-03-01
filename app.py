@@ -14,6 +14,12 @@ from selenium.webdriver.common.alert import Alert
 import pyautogui
 
 
+
+def digitar_naturalmente(texto, elemento):
+    for letra in texto:
+        elemento.send_keys(letra)
+        sleep(random.randint(1, 5)/30)
+
 def iniciar_driver():
     chrome_options = Options()
     '''
@@ -56,14 +62,6 @@ def iniciar_driver():
         ]
     )
     return driver, wait
-
-
-def digitar_naturalmente(texto, elemento):
-    for letra in texto:
-        elemento.send_keys(letra)
-        sleep(random.randint(1, 5)/30)
-
-
 # 1 - Navegar ate o site
 driver, wait = iniciar_driver()
 driver.get('https://stake.bet.br/bem-vindo')
@@ -129,10 +127,29 @@ sleep(1)
 botao_casino.click()
 sleep(8)
 
-# Usando Scroll para chegar ate o Bakara
-driver.execute_script("window.scrollTo(0, 800);")
+# Clicando seta
+seta = driver.find_elements(By.XPATH,"//div[@class='swiper-button-next']")
+sleep(1)
+seta[1].click()
+sleep(2)
+
+# Descendo ate baccarat
+ActionChains(driver).send_keys(Keys.DOWN*20).perform()
 sleep(3)
 
+driver.get('https://stake.bet.br/cassino/jogo/stake-speed-baccarat')
+sleep(5)
+driver.maximize_window()
+sleep(10)
+
+# Fechando Guia de Localização
+botao_fechar_guia = wait.until(condicao_esperada.element_to_be_clickable(
+    (By.XPATH, "//span[@class='StyledModalClose-sc-mv2bgq izwmed']")))
+sleep(1)
+botao_fechar_guia.click()
+sleep(5)
+
+# Fechando anuncios desnecessarios 
 
 
 

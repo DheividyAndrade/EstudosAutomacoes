@@ -1,21 +1,31 @@
+import threading
 import tkinter as tk
-from tkinter import messagebox
 from selenium import webdriver
-import random
-from time import sleep
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as condicao_esperada
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import *
+from selenium.webdriver.support import expected_conditions as condicao_esperada
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
+import time
+import pyautogui
+import random
 
-# Função para iniciar o driver do Selenium
+# Variável global para controle da execução
+executando = False
+
+def digitar_naturalmente(texto, elemento):
+    for letra in texto:
+        elemento.send_keys(letra)
+        time.sleep(random.uniform(0.03, 0.1))  # Tempo aleatório entre teclas
+
 def iniciar_driver():
     chrome_options = Options()
     arguments = ['--lang=pt-BR', '--window-size=1400,750', '--incognito']
     for argument in arguments:
         chrome_options.add_argument(argument)
+
     chrome_options.add_experimental_option('prefs', {
         'download.default_directory': 'D:\\Storage\\Desktop\\projetos selenium\\downloads',
         'download.directory_upgrade': True,
@@ -23,92 +33,124 @@ def iniciar_driver():
         'profile.default_content_setting_values.notifications': 2,
         'profile.default_content_setting_values.automatic_downloads': 1,
     })
+
     driver = webdriver.Chrome(options=chrome_options)
-    wait = WebDriverWait(driver, 10, poll_frequency=1, ignored_exceptions=[NoSuchElementException, ElementNotVisibleException, ElementNotSelectableException])
+    wait = WebDriverWait(driver, 10, poll_frequency=1, ignored_exceptions=[
+        NoSuchElementException, ElementNotVisibleException, ElementNotSelectableException
+    ])
     return driver, wait
 
-# Função para digitar texto de forma mais natural
-def digitar_naturalmente(texto, elemento):
-    for letra in texto:
-        elemento.send_keys(letra)
-        sleep(random.randint(1, 5)/30)
+def rodar_automacao():
+    global executando
+    executando = True  # Define que a automação está rodando
+    
+    driver, wait = iniciar_driver()
+    driver.get('https://stake.bet.br/bem-vindo')
+    driver.maximize_window()
+    time.sleep(3)
 
-# Função para executar o bot
-def iniciar_bot():
     try:
-        driver, wait = iniciar_driver()
-        driver.get('https://stake.bet.br/bem-vindo')
-        driver.maximize_window()
-        sleep(3)
-
-        cookins = wait.until(condicao_esperada.element_to_be_clickable((By.XPATH, "//button[text()='Aceitar cookies']")))            
-        sleep(1)
+        # Aceitar Cookies
+        cookins = wait.until(condicao_esperada.element_to_be_clickable((By.XPATH, "//button[text()='Aceitar cookies']")))
         cookins.click()
-        sleep(2)
+        time.sleep(2)
 
+        # Clicar em "Entrar"
         botao_entrar = wait.until(condicao_esperada.element_to_be_clickable((By.XPATH, "//button[text()='Entrar']")))
-        sleep(1)
         botao_entrar.click()
-        sleep(3)
+        time.sleep(3)
 
-        campo_escrever_email = wait.until(condicao_esperada.element_to_be_clickable((By.NAME, 'username')))
-        sleep(1)
-        digitar_naturalmente('deividyandrade@hotmail.com', campo_escrever_email)
-        sleep(2)
+        # Escrever Email/Login
+        campo_email = wait.until(condicao_esperada.element_to_be_clickable((By.NAME, 'username')))
+        digitar_naturalmente('deividyandrade@hotmail.com', campo_email)
+        time.sleep(2)
 
-        campo_escrever_senha = wait.until(condicao_esperada.element_to_be_clickable((By.NAME, 'password')))
-        sleep(1)
-        digitar_naturalmente('Ddguit@r321', campo_escrever_senha)
-        sleep(2)
+        # Escrever Senha
+        campo_senha = wait.until(condicao_esperada.element_to_be_clickable((By.NAME, 'password')))
+        digitar_naturalmente('Ddguit@r321', campo_senha)
+        time.sleep(2)
 
-        botao_enviar = wait.until(condicao_esperada.element_to_be_clickable((By.XPATH, "//div[@class='StyledLoadingContainer-sc-zuafez vxcJN']")))
-        sleep(1)
+        # Clicar em "Enviar"
+        botao_enviar = wait.until(condicao_esperada.element_to_be_clickable(
+            (By.XPATH, "//div[@class='StyledLoadingContainer-sc-zuafez vxcJN']")))
         botao_enviar.click()
-        sleep(5)
+        time.sleep(5)
 
+        # Confirmar localização
         botao_entendi = wait.until(condicao_esperada.element_to_be_clickable((By.XPATH, "//button[text()='Entendi']")))
-        sleep(1)
         botao_entendi.click()
-        sleep(600)
+        time.sleep(3)
 
-        botao_spam = wait.until(condicao_esperada.element_to_be_clickable((By.XPATH, "//span[@class='StyledModalClose-sc-mv2bgq izwmed']")))
-        sleep(2)
-        botao_spam.click()
-        sleep(5)
+        # Pedir permissão para localização
+        pyautogui.alert(text='Permita a Localização do site! VOCÊ TEM 10s', title='ALERTA USUARIO DO BOT!', button='OK')
+        time.sleep(12)
 
-        sleep(12)
+        # Fechar guia de localização
+        botao_fechar_guia = wait.until(condicao_esperada.element_to_be_clickable(
+            (By.XPATH, "//span[@class='StyledModalClose-sc-mv2bgq izwmed']")))
+        botao_fechar_guia.click()
+        time.sleep(5)
 
-        botao_menu = wait.until(condicao_esperada.element_to_be_clickable((By.XPATH, "//i[@class='icon-menu'")))
-        sleep(1)
-        botao_menu.click()
-        sleep(2)
-
-        botao_casino = wait.until(condicao_esperada.element_to_be_clickable((By.XPATH, "//img[@alt='casino'")))
-        sleep(1)
+        # Acessar Cassino
+        botao_casino = wait.until(condicao_esperada.element_to_be_clickable((By.XPATH, "//img[@alt='casino']")))
         botao_casino.click()
-        sleep(5)
+        time.sleep(8)
 
-        driver.execute_script("window.scrollTo(0, 800);")
+        # Scroll até "Stake Speed Baccarat"
+        ActionChains(driver).send_keys(Keys.DOWN * 20).perform()
+        time.sleep(3)
 
-        sleep(1000)
+        # Acessar o jogo diretamente
+        driver.get('https://stake.bet.br/cassino/jogo/stake-speed-baccarat')
+        time.sleep(10)
 
-        driver.close()
+        # Fechar guia de localização novamente
+        botao_fechar_guia = wait.until(condicao_esperada.element_to_be_clickable(
+            (By.XPATH, "//span[@class='StyledModalClose-sc-mv2bgq izwmed']")))
+        botao_fechar_guia.click()
+        time.sleep(5)
+
+        # Manter a automação rodando até ser parada
+        while executando:
+            time.sleep(1)
+
     except Exception as e:
-        messagebox.showerror("Erro", f"Ocorreu um erro ao executar o bot: {e}")
+        print(f"Erro durante a execução: {e}")
 
-# Função para criar a interface
-def criar_interface():
-    root = tk.Tk()
-    root.title("BOT Casino Alisson")
-    root.geometry("400x300")
+    finally:
+        driver.quit()
+        print("Automação encerrada.")
 
-    label = tk.Label(root, text="Bem-vindo ao BOT Casino Alisson", font=("Arial", 16))
-    label.pack(pady=30)
+def iniciar_thread():
+    """Inicia a automação em uma thread separada para não travar a interface."""
+    global executando
+    if not executando:
+        thread = threading.Thread(target=rodar_automacao)
+        thread.start()
 
-    botao_comecar = tk.Button(root, text="Começar", font=("Arial", 14), command=iniciar_bot)
-    botao_comecar.pack(pady=10)
+def parar_automacao():
+    """Para a execução da automação."""
+    global executando
+    executando = False
+    print("Automação interrompida pelo usuário.")
 
-    root.mainloop()
+# Criando a interface gráfica
+janela = tk.Tk()
+janela.title("BOT AUTOMAÇÃO CASSINO STAKE - Alisson")
+janela.geometry("400x300")
+janela.configure(bg="#1e1e1e")
 
-# Chamar a função para iniciar a interface
-criar_interface()
+# Título na interface
+titulo = tk.Label(janela, text="BOT AUTOMAÇÃO CASSINO STAKE", font=("Arial", 14, "bold"), fg="white", bg="#1e1e1e")
+titulo.pack(pady=20)
+
+# Botão Play (Iniciar automação)
+botao_play = tk.Button(janela, text="▶ Play", font=("Arial", 12, "bold"), fg="white", bg="green", width=10, command=iniciar_thread)
+botao_play.pack(pady=10)
+
+# Botão Stop (Parar automação)
+botao_stop = tk.Button(janela, text="⏹ Stop", font=("Arial", 12, "bold"), fg="white", bg="red", width=10, command=parar_automacao)
+botao_stop.pack(pady=10)
+
+# Rodar a interface gráfica
+janela.mainloop()
