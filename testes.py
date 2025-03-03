@@ -110,6 +110,28 @@ def rodar_automacao():
         botao_fechar_guia.click()
         time.sleep(5)
 
+        # Botões Jogador/Banca/Apostas/Dobra/Dinheiro
+
+        jogador = wait.until(condicao_esperada.element_to_be_clickable(
+            (By.XPATH, "")))
+        banca = wait.until(condicao_esperada.element_to_be_clickable(
+            (By.XPATH, "")))
+        aposta = wait.until(condicao_esperada.element_to_be_clickable(
+            (By.XPATH, "")))
+        dobra = wait.until(condicao_esperada.element_to_be_clickable(
+            (By.XPATH, "")))
+        dinheiro = wait.until(condicao_esperada.element_to_be_clickable(
+            (By.XPATH, "")))
+
+        
+
+
+
+
+
+
+
+
         # Manter a automação rodando até ser parada
         while executando:
             time.sleep(1)
