@@ -51,7 +51,7 @@ def iniciar_driver():
             ElementNotSelectableException,
         ]
     )
-    return driver, wai
+    return driver, wait
 
 # 1 - Navegar ate o site
 driver, wait = iniciar_driver()

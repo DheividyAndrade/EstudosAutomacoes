@@ -112,19 +112,8 @@ def rodar_automacao():
 
         # Botões Jogador/Banca/Apostas/Dobra/Dinheiro
 
-        jogador = wait.until(condicao_esperada.element_to_be_clickable(
-            (By.XPATH, "")))
-        banca = wait.until(condicao_esperada.element_to_be_clickable(
-            (By.XPATH, "")))
-        aposta = wait.until(condicao_esperada.element_to_be_clickable(
-            (By.XPATH, "")))
-        dobra = wait.until(condicao_esperada.element_to_be_clickable(
-            (By.XPATH, "")))
-        dinheiro = wait.until(condicao_esperada.element_to_be_clickable(
-            (By.XPATH, "")))
-
+        # Analogia do game
         
-
 
 
 
