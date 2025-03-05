@@ -75,7 +75,7 @@ sleep(10)
 # Analogia
 
 
-
+'''
 # Funções de clique
 def jogador():
     pyautogui.click(801, 730, duration=1)
@@ -98,6 +98,8 @@ def cor_azul_em_posicao(x, y):
 
 def cor_verde_em_posicao(x, y):
     return pyautogui.pixelMatchesColor(x, y, (40, 190, 103))
+def cor_branca_em_posicao(x, y):
+    return pyautogui.pixelMatchesColor(x, y, (240,240,240))
 
 # Loop de verificação enquanto a tecla "1" não for pressionada
 x = 339  # Posição inicial
@@ -137,6 +139,91 @@ while not keyboard.is_pressed('1'):
         contador = 0  # Reseta o contador
 
     sleep(1)  # Aguarda 1 segundo antes da próxima verificação
+'''
+
+
+# Analogia
+
+
+# Exibir alerta antes de iniciar o loop
+pyautogui.alert(
+    text="Clique no botão Ok, apenas quando o gráfico zerar. Espere até lá...",
+    title="Atenção",
+    button="Ok"
+)
+
+# Funções de clique
+def jogador():
+    pyautogui.click(801, 730, duration=1)
+
+def banca():
+    pyautogui.click(1016, 724, duration=1)
+
+def empate():
+    pyautogui.click(908, 717, duration=1)
+
+def aposta():
+    pyautogui.click(778, 843, duration=1)
+
+# Funções para verificar cores
+def cor_vermelha_em_posicao(x, y):
+    return pyautogui.pixelMatchesColor(x, y, (243, 61, 61))
+
+def cor_azul_em_posicao(x, y):
+    return pyautogui.pixelMatchesColor(x, y, (62, 138, 238))
+
+def cor_verde_em_posicao(x, y):
+    return pyautogui.pixelMatchesColor(x, y, (40, 190, 103))
+
+def cor_branca_em_posicao(x, y):
+    return pyautogui.pixelMatchesColor(x, y, (240, 240, 240))
+
+# Loop de verificação enquanto a tecla "1" não for pressionada
+x = 339  # Posição inicial
+contador = 0  # Contador para controlar quantas vezes o `x` foi incrementado
+
+while not keyboard.is_pressed('1'):
+    if cor_vermelha_em_posicao(x, 703):  # Se for vermelho, aposta na banca
+        print(f"Achamos a cor vermelha na posição ({x}, 703), apostando na Banca!")
+        sleep(55)
+        aposta()
+        sleep(0.5)
+        banca()  # Clica em banca
+        sleep(71)
+
+    elif cor_azul_em_posicao(x, 703):  # Se for azul, aposta no jogador
+        print(f"Achamos a cor azul na posição ({x}, 703), apostando no Jogador!")
+        sleep(55)
+        aposta()
+        sleep(0.5)
+        jogador()  # Clica em jogador
+        sleep(71)
+
+    elif cor_verde_em_posicao(x, 703):  # Se for verde, apenas pula para a próxima posição
+        print(f"A cor verde foi encontrada na posição ({x}, 703), passando para a próxima posição sem ação.")
+        sleep(135)
+    else:
+        print(f"Nenhuma cor encontrada na posição ({x}, 703), verificando a próxima posição...")
+
+    # Incrementa o valor de `x` para a próxima posição
+    x += 18
+    contador += 1
+
+    # Se `x` atingiu 16 iterações, reseta para a posição inicial
+    if contador >= 16:
+        print("16 iterações completas. Voltando para a posição inicial...")
+        x = 339  # Reseta para a posição inicial
+        contador = 0  # Reseta o contador
+
+        # Se a posição inicial for branca, esperar até encontrar outra cor
+        while cor_branca_em_posicao(x, 703):
+            print("A posição inicial está BRANCA. Aguardando até que apareça outra cor...")
+            sleep(1)  # Aguarda 1 segundo antes de verificar novamente
+
+        print("A cor mudou! Retornando à verificação normal.")
+
+    sleep(1)  # Aguarda 1 segundo antes da próxima verificação
+
 
 
 input('')
