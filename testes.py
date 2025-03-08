@@ -10,6 +10,12 @@ from selenium.webdriver.support import expected_conditions as condicao_esperada
 from selenium.webdriver.common.action_chains import ActionChains
 import pyautogui
 import keyboard
+from tkinter import messagebox
+import tkinter as tk
+from tkinter import scrolledtext
+import threading
+import random
+
 
 
 contador = 1
@@ -55,6 +61,10 @@ def iniciar_driver():
         ]
     )
     return driver, wait
+def digitar_naturalmente(texto, elemento):
+    for letra in texto:
+        elemento.send_keys(letra)
+        sleep(random.uniform(0.03, 0.1))  # Tempo aleatório entre teclas
 
 # 1 - Navegar ate o site
 driver, wait = iniciar_driver()
@@ -62,16 +72,61 @@ driver.get('https://stake.bet.br/bem-vindo')
 sleep(1)
 # Usado para deixar tela completa do navegador.
 driver.maximize_window()
-sleep(30)
 
+
+# Aceitar Cookies
+cookins = wait.until(condicao_esperada.element_to_be_clickable((By.XPATH, "//button[text()='Aceitar cookies']")))
+cookins.click()
+sleep(2)
+
+# Clicar em "Entrar"
+botao_entrar = wait.until(condicao_esperada.element_to_be_clickable((By.XPATH, "//button[text()='Entrar']")))
+botao_entrar.click()
+sleep(3)
+
+# Escrever Email/Login
+campo_email = wait.until(condicao_esperada.element_to_be_clickable((By.NAME, 'username')))
+digitar_naturalmente('deividyandrade@hotmail.com', campo_email)
+sleep(2)
+
+# Escrever Senha
+campo_senha = wait.until(condicao_esperada.element_to_be_clickable((By.NAME, 'password')))
+digitar_naturalmente('Ddguit@r321', campo_senha)
+sleep(2)
+
+# Clicar em "Enviar"
+botao_enviar = wait.until(condicao_esperada.element_to_be_clickable(
+    (By.XPATH, "//div[@class='StyledLoadingContainer-sc-zuafez vxcJN']")))
+botao_enviar.click()
+sleep(5)
+# Pedir permissão para localização
+pyautogui.alert(text='Permita a Localização do site! VOCÊ TEM 10s', title='ALERTA USUARIO DO BOT!', button='OK')
+sleep(12)
+
+# Fechar guia de localização
+botao_fechar_guia = wait.until(condicao_esperada.element_to_be_clickable(
+    (By.XPATH, "//span[@class='StyledModalClose-sc-mv2bgq izwmed']")))
+botao_fechar_guia.click()
+sleep(5)
 
 driver.get('https://stake.bet.br/cassino/jogo/stake-speed-baccarat')
 sleep(30)
+
+# Fechar guia de localização
+botao_fechar_guia = wait.until(condicao_esperada.element_to_be_clickable((By.XPATH, "//span[@class='StyledModalClose-sc-mv2bgq izwmed']")))
+botao_fechar_guia.click()
+
+# Centralizando
 pyautogui.click(687,212, duration=2)
 pyautogui.press('down')
-sleep(10)
+sleep(5)
 
 
+# Fechando nots
+pyautogui.click(825,562,duration=1)
+sleep(1)
+pyautogui.click(595,245)
+sleep(3)
 
 
 '''
@@ -125,53 +180,40 @@ exibir_alerta()  # Exibe o alerta inicial
 while not keyboard.is_pressed('1'):
     if cor_azul_em_posicao(x, 703):
         print(f"Achamos a cor azul na posição ({x}, 703), apostando no Jogador!")
-        if cor_na_posicao_4_azul():
-            sleep(50)
+        sleep(50)
+        aposta()
+        sleep(0.5)
+        jogador()
+        sleep(15)                                 #verde     ou  #vermelha
+        if pyautogui.pixelMatchesColor(338, 760,(40, 190, 103) or (243, 61, 61)):
+            print('Achamos outra cor que não foi a valida na 4º posição. DOBRANDO!')
+            aposta()
+            sleep(0.5)
             aposta()
             sleep(0.5)
             jogador()
         else:
-            while cor_na_posicao_4_branca():
-                sleep(1)
-            if cor_na_posicao_4_azul():
-                sleep(50)
-                aposta()
-                sleep(0.5)
-                jogador()
-            elif cor_na_posicao_4():
-                sleep(50)
-                aposta()
-                sleep(0.5)
-                aposta()
-                sleep(0.5)
-                jogador()
-        sleep(71)
+            print('Acerto no 4ª posição AZUL!')
+            sleep(71)
     elif cor_vermelha_em_posicao(x, 703):
         print(f"Achamos a cor vermelha na posição ({x}, 703), apostando na Banca!")
-        if cor_na_posicao_4():
-            sleep(50)
+        sleep(50)
+        aposta()
+        sleep(0.5)
+        banca()
+        sleep(15)                               #verde     ou   azul
+        if pyautogui.pixelMatchesColor(338, 760,(40, 190, 103) or (62, 138, 238)):
+            print("Achamos outra cor que não foi a valida na 4º posição. DOBRANDO!")
+            aposta()
+            sleep(0.5)
             aposta()
             sleep(0.5)
             banca()
         else:
-            while cor_na_posicao_4_branca():
-                sleep(1)
-            if cor_na_posicao_4():
-                sleep(50)
-                aposta()
-                sleep(0.5)
-                banca()
-            elif cor_na_posicao_4_azul():
-                sleep(50)
-                aposta()
-                sleep(0.5)
-                aposta()
-                sleep(0.5)
-                banca()
-        sleep(80)
+            print('Acerto na 4ª posição VERMELHA!')
+            sleep(71)
     elif cor_verde_em_posicao(x, 703):
         print(f"A cor verde foi encontrada na posição ({x}, 703), passando para a próxima posição sem ação.")
-        sleep(130)
     else:
         print(f"Nenhuma cor encontrada na posição ({x}, 703), verificando a próxima posição...")
     
@@ -184,13 +226,12 @@ while not keyboard.is_pressed('1'):
         x = 339
         contador = 0
         while cor_branca_em_posicao(x, 703):
-            sleep(1)
-    
-    sleep(1)                                  
+            sleep(1) 
 '''
 
 
 
+# Funções de clique para apostas
 def jogador():
     pyautogui.click(801, 730, duration=1)
 
@@ -203,6 +244,7 @@ def empate():
 def aposta():
     pyautogui.click(778, 843, duration=1)
 
+# Funções para identificar cores
 def cor_vermelha_em_posicao(x, y):
     return pyautogui.pixelMatchesColor(x, y, (243, 61, 61))
 
@@ -215,6 +257,7 @@ def cor_verde_em_posicao(x, y):
 def cor_branca_em_posicao(x, y):
     return pyautogui.pixelMatchesColor(x, y, (240, 240, 240))
 
+# Funções para verificar as posições específicas
 def cor_na_posicao_4():
     return pyautogui.pixelMatchesColor(338, 760, (243, 61, 61))
 
@@ -224,6 +267,7 @@ def cor_na_posicao_4_branca():
 def cor_na_posicao_4_azul():
     return pyautogui.pixelMatchesColor(338, 760, (62, 138, 238))
 
+# Função de alerta
 def exibir_alerta():
     pyautogui.alert(
         text="**Aguarde até o Gráfico Resetar!**\n\n**Após isso, clique no botão 'Ok' para continuar a automação.**",
@@ -231,65 +275,59 @@ def exibir_alerta():
         button="**Ok**",
     )
 
+# Variáveis
 x = 339
 contador = 0
 
 exibir_alerta()  # Exibe o alerta inicial
 
+# Loop principal
 while not keyboard.is_pressed('1'):
-    while cor_branca_em_posicao(x, 703):
-        print(f"A posição ({x}, 703) está branca. Aguardando até aparecer uma cor válida...")
-        sleep(1)
-    
     if cor_azul_em_posicao(x, 703):
         print(f"Achamos a cor azul na posição ({x}, 703), apostando no Jogador!")
-        if cor_na_posicao_4_azul():
-            sleep(50)
+        sleep(47)
+        aposta()
+        sleep(0.5)
+        jogador()
+        sleep(15)  # Espera para verificar a 4ª posição
+        
+        # Verificando a 4ª posição com incremento no X a cada interação
+        if cor_azul_em_posicao == pyautogui.pixelMatchesColor(338 + x, 760,(62, 138, 238)):
+            print("Achamos a Cor azul na posição 4!")
+            sleep(71)
+        else:
+            sleep(13)
+            print('Não foi a cor correspondente. Dobrando Aposta..')
+            aposta()
+            sleep(0.5)
             aposta()
             sleep(0.5)
             jogador()
-        else:
-            while cor_na_posicao_4_branca():
-                sleep(1)
-            if cor_na_posicao_4_azul():
-                sleep(50)
-                aposta()
-                sleep(0.5)
-                jogador()
-            elif cor_na_posicao_4():
-                sleep(50)
-                aposta()
-                sleep(0.5)
-                aposta()
-                sleep(0.5)
-                jogador()
-        sleep(71)
+            sleep(71)
+
     elif cor_vermelha_em_posicao(x, 703):
         print(f"Achamos a cor vermelha na posição ({x}, 703), apostando na Banca!")
-        if cor_na_posicao_4():
-            sleep(50)
+        sleep(47)
+        aposta()
+        sleep(0.5)
+        banca()
+        sleep(15)  # Espera para verificar a 4ª posição
+        # Verificando a 4ª posição com incremento no X a cada interação
+        if cor_vermelha_em_posicao == pyautogui.pixelMatchesColor(338 + x, 760,(243, 61, 61)):
+            print("Achamos a Cor vermelha na posição 4!")
+            sleep(71)
+        else:
+            sleep(13)
+            print('Não foi a cor correspondente. Dobrando Aposta..')
+            aposta()
+            sleep(0.5)
             aposta()
             sleep(0.5)
             banca()
-        else:
-            while cor_na_posicao_4_branca():
-                sleep(1)
-            if cor_na_posicao_4():
-                sleep(50)
-                aposta()
-                sleep(0.5)
-                banca()
-            elif cor_na_posicao_4_azul():
-                sleep(50)
-                aposta()
-                sleep(0.5)
-                aposta()
-                sleep(0.5)
-                banca()
-        sleep(80)
+            sleep(71)
+            
     elif cor_verde_em_posicao(x, 703):
         print(f"A cor verde foi encontrada na posição ({x}, 703), passando para a próxima posição sem ação.")
-        sleep(130)
     else:
         print(f"Nenhuma cor encontrada na posição ({x}, 703), verificando a próxima posição...")
     
@@ -302,10 +340,7 @@ while not keyboard.is_pressed('1'):
         x = 339
         contador = 0
         while cor_branca_em_posicao(x, 703):
-            print("A posição inicial está BRANCA. Aguardando até aparecer outra cor...")
             sleep(1)
-    
-    sleep(1)
 
 
 input('')
